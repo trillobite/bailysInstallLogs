@@ -1,0 +1,247 @@
+    1  apt-get update
+    2  apt-get upgrade
+    3  apt-get dist-upgrade
+    4  apt-get install vim
+    5  vim /etc/mysql/my.cnf
+    6  rm /etc/mysql/my.cnf
+    7  cp /etc/mysql/mysql.conf.d/mysqld.cnf /etc/mysql/my.cnf
+    8  vim /etc/mysql/my.cnf
+    9  systemctl restart mysql
+   10  apt-get install zoneminder
+   11  mysql -uroot -p < /usr/share/zoneminder/db/zm_create.sql
+   12  mysql -uroot -p -e "grant select,insert,update,delete,create,alter,index,lock tables on zm.* to 'zmuser'@localhost identified by 'zmpass';"
+   13  chmod 740 /etc/zm/zm.conf
+   14  chown root:www-data /etc/zm/zm.conf
+   15  chown -R www-data:www-data /usr/share/zoneminder/
+   16  a2enconf zoneminder
+   17  a2enmod cgi
+   18  a2enmod rewrite
+   19  systemctl restart apache2
+   20  systemctl enable zoneminder
+   21  systemctl start zoneminder
+   22  vim /etc/php/7.0/apache2/php.ini
+   23  ls /etc/php
+   24  vim /etc/php/7.2/apache2/php.ini
+   25  systemctl reload apache2
+   26  ifconfig
+   27  mkdir /mnt/zma1
+   28  vim /etc/systemd/system/mnt-zma1.mount
+   29  vim ~/.smbcredentials
+   30  chmod 600 ~/.smbcredentials
+   31  systemctl enable mnt-zma1.mount
+   32  systemctl start mnt-zma1.mount
+   33  ls
+   34  vim ~/.smbcredentials
+   35  systemctl start mnt-zma1.mount
+   36  systemctl enable mnt-zma1.mount
+   37  systemctl start mnt-zma1.mount
+   38  apt-get install smbclient cifs-utils
+   39  systemctl enable mnt-zma1.mount
+   40  systemctl start mnt-zma1.mount
+   41  vim ~/.smbcredentials
+   42  vim /etc/systemd/system/mnt-zma1.mount
+   43  systemctl stop mnt-zma1.mount
+   44  systemctl enable mnt-zma1.mount
+   45  systemctl start mnt-zma1.mount
+   46  systemctl restart mnt-zma1.mount
+   47  mkdir -p /mnt/zma1/zoneminder/events
+   48  mkdir -p /mnt/zma1/zoneminder/images
+   49  chown -R www-data:www-data /mnt/zma1/zoneminder
+   50  vim /etc/systemd/system/var-cache-zoneminder-events.mount
+   51  service zoneminder stop
+   52  rm -r /var/cache/zoneminder/events
+   53  rm -r /var/cache/zoneminder/images
+   54  systemctl enable var-cache-zoneminder-events.mount
+   55  systemctl start var-cache-zoneminder-events.mount
+   56  vim /etc/systemd/system/var-cache-zoneminder-images.mount
+   57  systemctl enable var-cache-zoneminder-images.mount
+   58  systemctl start var-cache-zoneminder-images.mount
+   59  cp /lib/systemd/system/zoneminder.service /lib/systemd/system/zoneminder.service.sav
+   60  vim /lib/systemd/system/zoneminder.service
+   61  systemctl daemon-reload
+   62  service zoneminder start
+   63  chown -R www-data:www-data /var/cache/zoneminder/events
+   64  chown -R www-data:www-data /var/cache/zoneminder/images
+   65  cd /mnt
+   66  ls
+   67  cd zma1
+   68  ls
+   69  ls -a
+   70  cd ..
+   71  history
+   72  vim /etc/systemd/system/var-cache-zoneminder-images.mount
+   73  cd /var/cache
+   74  ls
+   75  cd zoneminder
+   76  ls
+   77  ping 192.168.8.15
+   78  systemctl daemon-reload
+   79  history | grep service
+   80  service zoneminder stop
+   81  service zoneminder start
+   82  ls -l
+   83  history
+   84  vim /etc/systemd/system/mnt-zma1.mount
+   85  history | grep zoneminder
+   86  service zoneminder stop
+   87  vim /etc/systemd/system/mnt-zma1.mount
+   88  vim /etc/fstab
+   89  vim /lib/systemd/system/zoneminder.service
+   90  vim /etc/systemd/system/mnt-zma1.mount
+   91  chown -R www-data:www-data /mnt/zma1/zoneminder
+   92  service zoneminder stop
+   93  ls -l /dev/disk/by-uuid
+   94  ls
+   95  vim /etc/systemd/system/mnt-zma1.mount
+   96  vim /etc/systemd/system/var-cache-zoneminder-images.mount
+   97  mkdir /var/cache/zoneminder/ondiskevents
+   98  mkdir /var/cache/zoneminder/ondiskimages
+   99  service zoneminder start
+  100  service zoneminder restart
+  101  chown -R www-data:www-data /var/cache/zoneminder/ondiskevents
+  102  chown -R www-data:www-data /var/cache/zoneminder/ondiskimages
+  103  service zoneminder restart
+  104  ls
+  105  ls -l
+  106  cd ondiskevents
+  107  ls
+  108  ls -a
+  109  cd ..
+  110  chown -R www-data:www-data /mnt/zma1/zoneminder
+  111  cd /mnt/zma1/zoneminder
+  112  ls
+  113  cd events
+  114  ls
+  115  cd ..
+  116  chown -R www-data:www-data events
+  117  chown -R www-data:www-data images
+  118  sudo apt-get install open-iscsi
+  119  vim /etc/iscsi/iscsid.conf
+  120  iscsiadm -m discovery -t st -p 192.168.2.8
+  121  ping 192.168.2.8
+  122  iscsiadm -m discovery -t st -p 192.168.2.8
+  123  iscsiadm --help
+  124  iscsiadm -m discovery -t st -p 192.168.2.8:3260
+  125  man iscsiadm
+  126  iscsiadm -m discovery -t st -p 192.168.2.8
+  127  iscsiadm -m node --login
+  128  dmesg | grep sd
+  129  mkdir /dev/zmb
+  130  fdisk /dev/sdc
+  131  mkfs.ext4 /dev/sdc
+  132  fdisk /dev/sdc
+  133  mkfs.ext4 /dev/sdc1
+  134  mount /dev/sdc1 /srv
+  135  vim /etc/fstab
+  136  cd /srv
+  137  ls
+  138  history
+  139  vim /etc/systemd/system/mnt-zma1.mount
+  140  systemctl restart mnt-zma1.mount
+  141  systemctl daemon-reload
+  142  systemctl restart var-cache-zoneminder-events.mount
+  143  systemctl restart var-cache-zoneminder-images.mount
+  144  chown -R www-data:www-data /mnt/zma1/zoneminder
+  145  cd /mnt/zma1
+  146  ls
+  147  cd zoneminder
+  148  ls
+  149  cd ..
+  150  ls -l
+  151  cd zoneminder
+  152  ls -l
+  153  cd /var/cache
+  154  ls
+  155  cd zoneminder
+  156  ls
+  157  ls -l
+  158  systemctl daemon-reload
+  159  service zoneminder start
+  160  service zoneminder stop
+  161  service zoneminder start
+  162  history | grep zoneminder
+  163  service zoneminder start
+  164  service zoneminder restart
+  165  cd /mnt/zma1/zoneminder
+  166  ls
+  167  history
+  168  ls /dev
+  169  cd /
+  170  ls
+  171  cd srv
+  172  ls
+  173  cd zoneminder
+  174  ls
+  175  cd ..
+  176  vim /etc/systemd/system/var-cache-zoneminder-images.mount
+  177  vim /etc/systemd/system/var-cache-zoneminder-events.mount
+  178  systemctl restart var-cache-zoneminder-images.mount
+  179  systemctl daemon-reload
+  180  systemctl restart var-cache-zoneminder-images.mount
+  181  systemctl restart var-cache-zoneminder-events.mount
+  182  service stop zoneminder
+  183  history | grep zoneminder
+  184  service zoneminder stop
+  185  service zoneminder start
+  186  service zoneminder stop
+  187  vim /etc/systemd/system/var-cache-zoneminder-images.mount
+  188  cd var/cache/zoneminder
+  189  cd /var/cache/zoneminder
+  190  ls
+  191  history | grep chown
+  192  chown -R www-data:www-data /var/cache/zoneminder/events
+  193  chown -R www-data:www-data /var/cache/zoneminder/images
+  194  service zoneminder stop
+  195  service zoneminder start
+  196  chown -R www-data:www-data /var/cache/zoneminder
+  197  cd /var/cache/zoneminder
+  198  ls
+  199  cd events
+  200  ls
+  201  history | grep service
+  202  service zoneminder stop
+  203  apt-get install tmux
+  204  history
+  205  service zoneminder stop
+  206  cd /mnt
+  207  ls
+  208  cd zma1
+  209  ls
+  210  cd zoneminder
+  211  ls
+  212  cd events
+  213  ls
+  214  history
+  215  history > installHistory
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+  234  ls -l /dev/disk/by-uuid
+  235  vim /etc/fstab
+  236  vim /etc/systemd/system/var-cache-zoneminder-images.mount
+  237  systemctl start var-cache-zoneminder-images.mount
+  238  vim /etc/systemd/system/var-cache-zoneminder-images.mount
+  239  history | grep mnt-zma1.mount
+  240  vim /etc/systemd/system/mnt-zma1.mount
+  241  systemctl restart mnt-zma1.mount
+  242  systemctl daemon-reload
+  243  systemctl restart mnt-zma1.mount
+  244  systemctl start var-cache-zoneminder-images.mount
+  245  systemctl start var-cache-zoneminder-events.mount
+  246  service zoneminder start
+  247  service zoneminder stop
+  248  chown -R www-data:www-data /mnt/zma1/zoneminder
+  249  cd /mnt/zma1/zoneminder
+  250  chown -R www-data:www-data events
+  251  chown -R www-data:www-data images
+  252  chown -R www-data:www-data /var/cache/zoneminder/events
+  253  chown -R www-data:www-data /var/cache/zoneminder/images
+  254  ls -l
+  255  cd /var/cache
+  256  ls -l
+  257  cd zoneminder
+  258  ls -l
+  259  service zoneminder start
+  260  service zoneminder stop
+
